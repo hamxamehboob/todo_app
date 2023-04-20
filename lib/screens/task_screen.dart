@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Screens/Widgets/text_field_box.dart';
+import 'package:todo_app/Screens/widgets/text_field_box.dart';
 
-import 'Widgets/list_widget.dart';
+import 'widgets/list_widget.dart';
 
 class TaskScreen extends StatefulWidget {
   TaskScreen({Key? key}) : super(key: key);
