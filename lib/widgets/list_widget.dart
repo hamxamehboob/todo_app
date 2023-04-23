@@ -8,7 +8,6 @@ class AddListWidget extends StatefulWidget {
 }
 
 class _AddListWidgetState extends State<AddListWidget> {
-  ValueNotifier<String> inputvalue = ValueNotifier('');
   bool valuefirst = false;
 
   @override
@@ -33,16 +32,15 @@ class _AddListWidgetState extends State<AddListWidget> {
               SizedBox(
                 width: 20,
               ),
-              ValueListenableBuilder(
-                  valueListenable: valueListenable, builder: builder),
-              Text(
-                "Create UI",
-                style: TextStyle(
-                    color: Color(0xFF040404),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400),
+              Expanded(
+                child: Text(
+                  "Hamza Mehboob",
+                  style: TextStyle(
+                      color: Color(0xFF040404),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400),
+                ),
               ),
-              SizedBox(width: 80,),
               Icon(Icons.edit, color: Colors.grey,),
               SizedBox(width: 10,),
               Icon(Icons.delete, color: Colors.red,)
