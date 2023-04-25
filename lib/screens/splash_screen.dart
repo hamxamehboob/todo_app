@@ -20,16 +20,17 @@ class _SplashScreenState extends State<SplashScreen> {
   navigateToHome() async {
     await Future.delayed(const Duration(seconds: 2)).then((value) =>
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => TaskScreen())));
+            .push(MaterialPageRoute(builder: (_) => const TaskScreen())));
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset('assets/images/Pic2.png'),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
           Center(

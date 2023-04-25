@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../Screens/task_screen.dart';
-
 class TextBoxButton extends StatelessWidget {
-  const TextBoxButton({Key? key}) : super(key: key);
+  const TextBoxButton(
+      {Key? key, required this.placeholder, required this.navigation})
+      : super(key: key);
+  final String placeholder;
+  final GestureTapCallback navigation;
 
   @override
   Widget build(BuildContext context) {
@@ -11,23 +13,22 @@ class TextBoxButton extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Padding(
-                  padding: EdgeInsets.only(left: 100),
+                  padding: const EdgeInsets.only(left: 100),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => TaskScreen()));
+                      navigation();
                     },
                     child: Text(
-                      "Submit task",
-                      style: TextStyle(
+                      placeholder,
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w800,
                           fontSize: 18),

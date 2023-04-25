@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Text_Field extends StatefulWidget {
-  const Text_Field({Key? key}) : super(key: key);
+class TaskTextField extends StatelessWidget {
+   TaskTextField({Key? key, required this.placeholder}) : super(key: key);
 
-  @override
-  State<Text_Field> createState() => _Text_FieldState();
-}
-
-class _Text_FieldState extends State<Text_Field> {
-  TextEditingController InputTextFieldController = TextEditingController();
-
+  TextEditingController inputTextFieldController = TextEditingController();
+  final String placeholder;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
           border: Border.all(
             color: Colors.white,
@@ -26,12 +21,12 @@ class _Text_FieldState extends State<Text_Field> {
           minLines: 1,
           maxLines: 3,
           textAlign: TextAlign.center,
-          controller: InputTextFieldController,
-          style: TextStyle(
+          controller: inputTextFieldController,
+          style: const TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
           decoration: InputDecoration(
-              hintText: 'Write a text',
-              hintStyle: TextStyle(
+              hintText: placeholder,
+              hintStyle: const TextStyle(
                 color: Colors.black54,
                 fontSize: 18,
               ),

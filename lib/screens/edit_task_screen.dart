@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Screens/task_screen.dart';
-import 'package:todo_app/model/add_task_class.dart';
+import 'package:todo_app/screens/add_task_screen.dart';
 import 'package:todo_app/widgets/text_button.dart';
 
-class AddTask extends StatelessWidget {
-  AddTask({Key? key}) : super(key: key);
+import '../model/add_task_class.dart';
 
+class EditTask extends StatelessWidget {
+  final String value;
+  EditTask({Key? key, required this.value}) : super(key: key);
   TextEditingController inputTextFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    inputTextFieldController.text = value;
     return Scaffold(
       backgroundColor: const Color(0xFFCDD6E8),
       body: Column(
@@ -22,7 +24,7 @@ class AddTask extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => TaskScreen()));
+                        .push(MaterialPageRoute(builder: (_) => AddTask()));
                   },
                   child: const Icon(
                     Icons.arrow_back_ios_new_outlined,
@@ -33,7 +35,7 @@ class AddTask extends StatelessWidget {
                   width: 23,
                 ),
                 const Text(
-                  "Add New Task",
+                  "Edit a task",
                   style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -73,12 +75,11 @@ class AddTask extends StatelessWidget {
                       border: InputBorder.none),
                 ),
               )),
-          // Text_Field( placeholder: 'Write a task',),
           TextBoxButton(
-            placeholder: 'Submit a task',
+            placeholder: 'Update a task',
             navigation: () {
               var data =TaskPost(inputTextFieldController.text);
-              Navigator.pop(context, data);
+              Navigator.pop(context,data);
             },
           ),
         ],
@@ -86,5 +87,4 @@ class AddTask extends StatelessWidget {
     );
   }
 }
-
 
