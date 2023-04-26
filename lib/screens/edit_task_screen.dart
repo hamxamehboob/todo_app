@@ -1,18 +1,20 @@
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/widgets/text_button.dart';
-
 import '../model/add_task_class.dart';
+import '../model/db_,model.dart';
 
 class EditTask extends StatelessWidget {
-  final String value;
+  final int value;
 
   EditTask({Key? key, required this.value}) : super(key: key);
   final TextEditingController inputTextFieldController =
       TextEditingController();
+  var db = DatabaseConnect();
 
   @override
   Widget build(BuildContext context) {
-    inputTextFieldController.text = value;
+    // inputTextFieldController.text = value;
     return Scaffold(
       backgroundColor: const Color(0xFFCDD6E8),
       body: Column(
@@ -76,6 +78,7 @@ class EditTask extends StatelessWidget {
           TextBoxButton(
             placeholder: 'Update a task',
             navigation: () {
+              updateTask();
               var data = TaskPost(inputTextFieldController.text);
               Navigator.pop(context, data);
             },
@@ -83,5 +86,17 @@ class EditTask extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void updateTask() async {
+    await db.updateTodo(value, inputTextFieldController.text);
+    // Navigator.pop();
+    // Navigator.pop(context, data);
+    //show snackbar
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     content: Text('Task updated'),
+    //   ),
+    // );
   }
 }

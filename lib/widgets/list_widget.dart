@@ -7,10 +7,11 @@ import '../Screens/edit_task_screen.dart';
 class ListWidget extends StatefulWidget {
   final int id;
   final String title;
-  bool isChecked;
   final DateTime creationDate;
   final Function insertFunction;
   final Function deleteFunction;
+  bool isChecked;
+
 
   ListWidget(
       {Key? key,
@@ -27,6 +28,7 @@ class ListWidget extends StatefulWidget {
 }
 
 class _ListWidgetState extends State<ListWidget> {
+  late int id = widget.id;
   @override
   Widget build(BuildContext context) {
     var anotherTodo = Todo(
@@ -87,7 +89,7 @@ class _ListWidgetState extends State<ListWidget> {
                   color: Colors.grey,
                 ),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => EditTask(value: '',)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => EditTask(value: id,)));
                 },
               ),
               const SizedBox(width: 4),
