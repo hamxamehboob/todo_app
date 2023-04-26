@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/add_task_screen.dart';
 import 'package:todo_app/widgets/text_button.dart';
 
 import '../model/add_task_class.dart';
 
 class EditTask extends StatelessWidget {
   final String value;
+
   EditTask({Key? key, required this.value}) : super(key: key);
-  TextEditingController inputTextFieldController = TextEditingController();
+  final TextEditingController inputTextFieldController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,7 @@ class EditTask extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => AddTask()));
-                  },
+                  onTap: () {},
                   child: const Icon(
                     Icons.arrow_back_ios_new_outlined,
                     color: Colors.black,
@@ -78,8 +76,8 @@ class EditTask extends StatelessWidget {
           TextBoxButton(
             placeholder: 'Update a task',
             navigation: () {
-              var data =TaskPost(inputTextFieldController.text);
-              Navigator.pop(context,data);
+              var data = TaskPost(inputTextFieldController.text);
+              Navigator.pop(context, data);
             },
           ),
         ],
@@ -87,4 +85,3 @@ class EditTask extends StatelessWidget {
     );
   }
 }
-

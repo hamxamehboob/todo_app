@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/model/db_,model.dart';
 import 'package:todo_app/screens/add_task_screen.dart';
-
-import '../model/add_task_class.dart';
-import 'edit_task_screen.dart';
+import 'package:todo_app/widgets/todo_list.dart';
+import '../model/todo_model.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({Key? key}) : super(key: key);
@@ -12,8 +12,17 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  List<TaskPost> list = [];
-  bool isChecked = false;
+  var db = DatabaseConnect();
+
+  void addItem(Todo todo) async {
+    await db.insertTodo(todo);
+    setState(() {});
+  }
+
+  void deleteItem(Todo todo) async {
+    await db.deleteTodo(todo);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +31,8 @@ class _TaskScreenState extends State<TaskScreen> {
         floatingActionButton: FloatingActionButton.extended(
             backgroundColor: Colors.white,
             onPressed: () {
-              Navigator.of(context)
-                  .push<TaskPost>(MaterialPageRoute(builder: (_) => AddTask()))
-                  .then((value) => setState(() {
-                        list.add(TaskPost(value?.task ?? " "));
-                      }));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => AddTask(insertFunction: addItem)));
             },
             label: const Text(
               "Add Task",
@@ -48,69 +54,12 @@ class _TaskScreenState extends State<TaskScreen> {
                     fontWeight: FontWeight.bold,
                     fontSize: 25),
               ),
-              ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemBuilder: lists,
-                itemCount: list.length,
+              TodoList(
+                insertFunction: addItem,
+                deleteFunction: deleteItem,
               ),
             ],
           ),
         ));
   }
-
-  Widget lists(BuildContext context, int index) => Padding(
-      padding: const EdgeInsets.only(right: 20),
-      child: Container(
-          padding: const EdgeInsets.only(right: 12),
-          margin: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: Colors.white),
-          child: Row(children: [
-            Checkbox(
-                shape: const RoundedRectangleBorder(),
-                checkColor: Colors.white,
-                activeColor: const Color(0xFF283593),
-                value: isChecked,
-                onChanged: (value) {
-                  setState(() {
-                    isChecked = value!;
-                  });
-                }),
-            Expanded(
-              child: Text(
-                list[index].task,
-                style: const TextStyle(
-                    color: Color(0xFF040404),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400),
-              ),
-            ),
-            GestureDetector(
-              child: const Icon(
-                Icons.edit,
-                color: Colors.grey,
-              ),
-              onTap: () {
-                Navigator.of(context)
-                    .push<TaskPost>(MaterialPageRoute(
-                        builder: (_) => EditTask(value: list[index].task)))
-                    .then((value) => setState(() {
-                          list[index].task = value?.task ?? "";
-                        }));
-              },
-            ),
-            const SizedBox(width: 4),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  list.removeAt(index);
-                });
-              },
-              child: const Icon(
-                Icons.delete,
-                color: Colors.red,
-              ),
-            )
-          ])));
 }

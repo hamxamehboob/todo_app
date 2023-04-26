@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Screens/task_screen.dart';
-import 'package:todo_app/model/add_task_class.dart';
 import 'package:todo_app/widgets/text_button.dart';
 
+import '../model/todo_model.dart';
 class AddTask extends StatelessWidget {
-  AddTask({Key? key}) : super(key: key);
-
-  TextEditingController inputTextFieldController = TextEditingController();
-
+  AddTask({Key? key, required this.insertFunction}) : super(key: key);
+  final TextEditingController _inputTextFieldController = TextEditingController();
+  final Function insertFunction;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +21,7 @@ class AddTask extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => TaskScreen()));
+                        .push(MaterialPageRoute(builder: (_) => const TaskScreen()));
                   },
                   child: const Icon(
                     Icons.arrow_back_ios_new_outlined,
@@ -59,7 +58,7 @@ class AddTask extends StatelessWidget {
                   minLines: 1,
                   maxLines: 3,
                   textAlign: TextAlign.center,
-                  controller: inputTextFieldController,
+                  controller: _inputTextFieldController,
                   style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -77,8 +76,9 @@ class AddTask extends StatelessWidget {
           TextBoxButton(
             placeholder: 'Submit a task',
             navigation: () {
-              var data =TaskPost(inputTextFieldController.text);
-              Navigator.pop(context, data);
+              var myTodo = Todo(title: _inputTextFieldController.text, creationDate: DateTime.now(), isChecked: false);
+              insertFunction(myTodo);
+              Navigator.pop(context, myTodo);
             },
           ),
         ],
