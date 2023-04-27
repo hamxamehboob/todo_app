@@ -3,6 +3,7 @@ import 'package:todo_app/model/todo_model.dart';
 import 'package:intl/intl.dart';
 
 import '../Screens/edit_task_screen.dart';
+
 //ignore: must_be_immutable
 class ListWidget extends StatefulWidget {
   final int id;
@@ -10,18 +11,19 @@ class ListWidget extends StatefulWidget {
   final DateTime creationDate;
   final Function insertFunction;
   final Function deleteFunction;
+  final Function updateFunction;
   bool isChecked;
 
-
-  ListWidget(
-      {Key? key,
-      required this.id,
-      required this.title,
-      required this.isChecked,
-      required this.creationDate,
-      required this.insertFunction,
-      required this.deleteFunction})
-      : super(key: key);
+  ListWidget({
+    Key? key,
+    required this.id,
+    required this.title,
+    required this.isChecked,
+    required this.creationDate,
+    required this.insertFunction,
+    required this.deleteFunction,
+    required this.updateFunction,
+  }) : super(key: key);
 
   @override
   State<ListWidget> createState() => _ListWidgetState();
@@ -29,8 +31,10 @@ class ListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<ListWidget> {
   late int id = widget.id;
+
   @override
   Widget build(BuildContext context) {
+    var  height=MediaQuery.of(context).size.height;
     var anotherTodo = Todo(
         title: widget.title,
         creationDate: widget.creationDate,
@@ -45,7 +49,6 @@ class _ListWidgetState extends State<ListWidget> {
                 borderRadius: BorderRadius.circular(10), color: Colors.white),
             child: Row(children: [
               Checkbox(
-
                   shape: const RoundedRectangleBorder(),
                   checkColor: Colors.white,
                   activeColor: const Color(0xFF283593),
@@ -89,7 +92,11 @@ class _ListWidgetState extends State<ListWidget> {
                   color: Colors.grey,
                 ),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => EditTask(value: id,)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => EditTask(
+                        updateFunction: widget.updateFunction,
+                            value: id,
+                          )));
                 },
               ),
               const SizedBox(width: 4),

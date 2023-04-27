@@ -6,8 +6,9 @@ import '../model/db_,model.dart';
 
 class EditTask extends StatelessWidget {
   final int value;
+  final Function updateFunction;
 
-  EditTask({Key? key, required this.value}) : super(key: key);
+  EditTask({Key? key, required this.value,required this.updateFunction}) : super(key: key);
   final TextEditingController inputTextFieldController =
       TextEditingController();
   var db = DatabaseConnect();
@@ -77,8 +78,8 @@ class EditTask extends StatelessWidget {
               )),
           TextBoxButton(
             placeholder: 'Update a task',
-            navigation: () {
-              updateTask();
+            navigation: () async{
+             await updateFunction(value, inputTextFieldController.text);
               var data = TaskPost(inputTextFieldController.text);
               Navigator.pop(context, data);
             },
@@ -88,15 +89,5 @@ class EditTask extends StatelessWidget {
     );
   }
 
-  void updateTask() async {
-    await db.updateTodo(value, inputTextFieldController.text);
-    // Navigator.pop();
-    // Navigator.pop(context, data);
-    //show snackbar
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   const SnackBar(
-    //     content: Text('Task updated'),
-    //   ),
-    // );
-  }
+
 }
