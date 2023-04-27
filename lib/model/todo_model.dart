@@ -1,6 +1,6 @@
 class Todo {
   int? id;
-  final String title;
+  String title;
   DateTime creationDate;
   bool isChecked;
 
@@ -10,7 +10,6 @@ class Todo {
     required this.creationDate,
     required this.isChecked,
   });
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,

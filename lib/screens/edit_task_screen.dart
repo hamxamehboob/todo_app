@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Screens/task_screen.dart';
+import 'package:todo_app/model/db_,model.dart';
+import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/widgets/text_button.dart';
 
-import '../model/add_task_class.dart';
+import 'edit_task_screen.dart';
 
-class EditTask extends StatelessWidget {
-  final String value;
+class EditTask extends StatefulWidget {
+  final int value;
 
-  EditTask({Key? key, required this.value}) : super(key: key);
+  EditTask({
+    Key,
+    key,
+    required this.value,
+  }) : super(key: key);
+
+  @override
+  State<EditTask> createState() => _EditTaskState();
+}
+
+class _EditTaskState extends State<EditTask> {
   final TextEditingController inputTextFieldController =
       TextEditingController();
+  var db = DatabaseConnect();
 
   @override
   Widget build(BuildContext context) {
-    inputTextFieldController.text = value;
     return Scaffold(
       backgroundColor: const Color(0xFFCDD6E8),
       body: Column(
@@ -23,7 +36,10 @@ class EditTask extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const TaskScreen()));
+                  },
                   child: const Icon(
                     Icons.arrow_back_ios_new_outlined,
                     color: Colors.black,
@@ -76,12 +92,22 @@ class EditTask extends StatelessWidget {
           TextBoxButton(
             placeholder: 'Update a task',
             navigation: () {
-              var data = TaskPost(inputTextFieldController.text);
-              Navigator.pop(context, data);
+              // var myTodo = Todo(title: inputTextFieldController.text, creationDate: DateTime.now(), isChecked: false);
+              updateItem();
+              db.getTodo();
+              setState(() {
+                updateItem();
+                db.getTodo();
+              });
+              Navigator.pop(context);
             },
           ),
         ],
       ),
     );
+  }
+
+  void updateItem() async {
+    await db.updateTodo(widget.value, inputTextFieldController.text);
   }
 }

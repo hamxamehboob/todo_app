@@ -8,7 +8,9 @@ class TodoList extends StatelessWidget {
   final db = DatabaseConnect();
 
   TodoList(
-      {required this.insertFunction, required this.deleteFunction, Key? key})
+      {required this.insertFunction,
+      required this.deleteFunction,
+      Key? key,})
       : super(key: key);
 
   @override
@@ -40,6 +42,7 @@ class TodoList extends StatelessWidget {
                     isChecked: data[i].isChecked,
                     insertFunction: insertFunction,
                     deleteFunction: deleteFunction,
+
                   ),
                 );
         },

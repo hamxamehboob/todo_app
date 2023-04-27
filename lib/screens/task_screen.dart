@@ -15,7 +15,7 @@ class _TaskScreenState extends State<TaskScreen> {
   var db = DatabaseConnect();
 
   void addItem(Todo todo) async {
-    await db.insertTodo(todo);
+    await db..insertTodo(todo);
     setState(() {});
   }
 
@@ -23,6 +23,7 @@ class _TaskScreenState extends State<TaskScreen> {
     await db.deleteTodo(todo);
     setState(() {});
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +58,7 @@ class _TaskScreenState extends State<TaskScreen> {
               TodoList(
                 insertFunction: addItem,
                 deleteFunction: deleteItem,
+
               ),
             ],
           ),

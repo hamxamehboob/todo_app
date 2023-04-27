@@ -3,6 +3,8 @@ import 'package:todo_app/model/todo_model.dart';
 import 'package:intl/intl.dart';
 
 import '../Screens/edit_task_screen.dart';
+
+
 //ignore: must_be_immutable
 class ListWidget extends StatefulWidget {
   final int id;
@@ -19,7 +21,8 @@ class ListWidget extends StatefulWidget {
       required this.isChecked,
       required this.creationDate,
       required this.insertFunction,
-      required this.deleteFunction})
+      required this.deleteFunction,
+  })
       : super(key: key);
 
   @override
@@ -27,6 +30,7 @@ class ListWidget extends StatefulWidget {
 }
 
 class _ListWidgetState extends State<ListWidget> {
+  late int id = widget.id;
   @override
   Widget build(BuildContext context) {
     var anotherTodo = Todo(
@@ -37,13 +41,12 @@ class _ListWidgetState extends State<ListWidget> {
     return Padding(
         padding: const EdgeInsets.only(right: 20),
         child: Container(
-            padding: const EdgeInsets.only(right: 12),
+            padding: const EdgeInsets.only(right: 12, top: 12, bottom: 12),
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10), color: Colors.white),
             child: Row(children: [
               Checkbox(
-
                   shape: const RoundedRectangleBorder(),
                   checkColor: Colors.white,
                   activeColor: const Color(0xFF283593),
@@ -66,11 +69,11 @@ class _ListWidgetState extends State<ListWidget> {
                           fontSize: 20,
                           fontWeight: FontWeight.w400),
                     ),
-                    const SizedBox(
-                      height: 4,
+                    Divider(
+                      color: Colors.black,
                     ),
                     Text(
-                      DateFormat('dd MMM yyyy - hh:mm aaa')
+                      DateFormat('dd MMM yyyy')
                           .format(widget.creationDate),
                       style: const TextStyle(
                         fontSize: 13,
@@ -87,7 +90,7 @@ class _ListWidgetState extends State<ListWidget> {
                   color: Colors.grey,
                 ),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => EditTask(value: '',)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => EditTask(value: id)));
                 },
               ),
               const SizedBox(width: 4),
@@ -103,3 +106,4 @@ class _ListWidgetState extends State<ListWidget> {
             ])));
   }
 }
+
