@@ -5,12 +5,14 @@ import 'list_widget.dart';
 class TodoList extends StatelessWidget {
   final Function insertFunction;
   final Function deleteFunction;
+  final Function updateFunction;
+
   final db = DatabaseConnect();
 
   TodoList(
       {required this.insertFunction,
       required this.deleteFunction,
-      Key? key,})
+      Key? key, required this.updateFunction,})
       : super(key: key);
 
   @override
@@ -41,7 +43,7 @@ class TodoList extends StatelessWidget {
                     creationDate: data[i].creationDate,
                     isChecked: data[i].isChecked,
                     insertFunction: insertFunction,
-                    deleteFunction: deleteFunction,
+                    deleteFunction: deleteFunction, updateFunction: updateFunction,
 
                   ),
                 );

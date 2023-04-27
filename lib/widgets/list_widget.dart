@@ -4,26 +4,26 @@ import 'package:intl/intl.dart';
 
 import '../Screens/edit_task_screen.dart';
 
-
 //ignore: must_be_immutable
 class ListWidget extends StatefulWidget {
   final int id;
   final String title;
-  bool isChecked;
   final DateTime creationDate;
   final Function insertFunction;
   final Function deleteFunction;
+  bool isChecked;
+  final Function updateFunction;
 
-  ListWidget(
-      {Key? key,
-      required this.id,
-      required this.title,
-      required this.isChecked,
-      required this.creationDate,
-      required this.insertFunction,
-      required this.deleteFunction,
-  })
-      : super(key: key);
+  ListWidget({
+    Key? key,
+    required this.id,
+    required this.title,
+    required this.isChecked,
+    required this.creationDate,
+    required this.insertFunction,
+    required this.deleteFunction,
+    required this.updateFunction,
+  }) : super(key: key);
 
   @override
   State<ListWidget> createState() => _ListWidgetState();
@@ -31,6 +31,7 @@ class ListWidget extends StatefulWidget {
 
 class _ListWidgetState extends State<ListWidget> {
   late int id = widget.id;
+
   @override
   Widget build(BuildContext context) {
     var anotherTodo = Todo(
@@ -73,8 +74,7 @@ class _ListWidgetState extends State<ListWidget> {
                       color: Colors.black,
                     ),
                     Text(
-                      DateFormat('dd MMM yyyy')
-                          .format(widget.creationDate),
+                      DateFormat('dd MMM yyyy - hh:mm aaa').format(widget.creationDate),
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
@@ -90,7 +90,11 @@ class _ListWidgetState extends State<ListWidget> {
                   color: Colors.grey,
                 ),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => EditTask(value: id)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => EditTask(
+                            updateFunction: widget.updateFunction,
+                            value: id,
+                          )));
                 },
               ),
               const SizedBox(width: 4),
@@ -106,4 +110,3 @@ class _ListWidgetState extends State<ListWidget> {
             ])));
   }
 }
-

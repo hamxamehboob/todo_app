@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Screens/task_screen.dart';
 import 'package:todo_app/model/db_,model.dart';
-import 'package:todo_app/model/todo_model.dart';
 import 'package:todo_app/widgets/text_button.dart';
 
-import 'edit_task_screen.dart';
+import '../model/add_task_class.dart';
 
-class EditTask extends StatefulWidget {
+class EditTask extends StatelessWidget {
   final int value;
-
+  final Function updateFunction;
   EditTask({
-    Key,
-    key,
-    required this.value,
+    Key, key, required this.value, required this.updateFunction,
   }) : super(key: key);
 
-  @override
-  State<EditTask> createState() => _EditTaskState();
-}
-
-class _EditTaskState extends State<EditTask> {
   final TextEditingController inputTextFieldController =
-      TextEditingController();
+  TextEditingController();
+
   var db = DatabaseConnect();
 
   @override
@@ -91,23 +84,14 @@ class _EditTaskState extends State<EditTask> {
               )),
           TextBoxButton(
             placeholder: 'Update a task',
-            navigation: () {
-              // var myTodo = Todo(title: inputTextFieldController.text, creationDate: DateTime.now(), isChecked: false);
-              updateItem();
-              db.getTodo();
-              setState(() {
-                updateItem();
-                db.getTodo();
-              });
-              Navigator.pop(context);
+            navigation: () async {
+              await updateFunction(value,inputTextFieldController.text);
+              var data = TaskPost(inputTextFieldController.text);
+              Navigator.pop(context, data);
             },
           ),
         ],
       ),
     );
-  }
-
-  void updateItem() async {
-    await db.updateTodo(widget.value, inputTextFieldController.text);
   }
 }
