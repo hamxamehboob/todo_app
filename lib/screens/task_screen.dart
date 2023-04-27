@@ -24,6 +24,12 @@ class _TaskScreenState extends State<TaskScreen> {
     setState(() {});
   }
 
+
+  void updateTask(id, title) async {
+    await db.updateTodo(id, title);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +63,7 @@ class _TaskScreenState extends State<TaskScreen> {
               TodoList(
                 insertFunction: addItem,
                 deleteFunction: deleteItem,
+                updateFunction: updateTask,
               ),
             ],
           ),

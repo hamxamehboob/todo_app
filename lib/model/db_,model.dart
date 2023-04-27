@@ -72,6 +72,7 @@ class DatabaseConnect {
       'todo',
       {
         'title': title,
+        'creationDate': DateTime.now().toString(),
       },
       where: 'id == ?',
       whereArgs: [id],
