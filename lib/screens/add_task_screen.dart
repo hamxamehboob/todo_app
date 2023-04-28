@@ -9,6 +9,7 @@ class AddTask extends StatefulWidget {
         super(key: key);
   final Function _insertFunction;
 
+
   @override
   State<AddTask> createState() => _AddTaskState();
 }
@@ -16,7 +17,6 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   final TextEditingController _inputTextFieldController =
       TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,9 +77,10 @@ class _AddTaskState extends State<AddTask> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: 15),
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
+                  errorText: _errorText,
                     hintText: "Write a task",
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       color: Colors.black54,
                       fontSize: 18,
                     ),
@@ -101,5 +102,17 @@ class _AddTaskState extends State<AddTask> {
         ],
       ),
     );
+  }
+  @override
+  void dispose() {
+    _inputTextFieldController.dispose();
+    super.dispose();
+  }
+  String? get _errorText {
+    final text = _inputTextFieldController.value.text;
+    if (text.isEmpty) {
+      return 'Can\'t be empty';
+    }
+    return null;
   }
 }

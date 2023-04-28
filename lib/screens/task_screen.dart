@@ -13,7 +13,6 @@ class TaskScreen extends StatefulWidget {
 
 class _TaskScreenState extends State<TaskScreen> {
   final _db = DatabaseConnect();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +21,7 @@ class _TaskScreenState extends State<TaskScreen> {
           backgroundColor: Colors.white,
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => AddTask(insertFunction: addItem)));
+                builder: (_) => AddTask(insertFunction: addItem,)));
           },
           label: const Text(
             "Add Task",

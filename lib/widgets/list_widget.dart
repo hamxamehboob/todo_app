@@ -108,6 +108,13 @@ class _ListWidgetState extends State<ListWidget> {
             const SizedBox(width: 4),
             GestureDetector(
               onTap: () {
+                showDialog(context: context, builder: (ctx) =>AlertDialog(title: Text("Confirm Delete"),actions: [
+                  TextButton(onPressed:(){
+                    Navigator.of(ctx).pop();
+                  }, child: Container(
+                    color: Colors.grey,child: Text("Yes"),
+                  ))
+                ],));
                 widget.deleteFunction(anotherTodo);
               },
               child: const Icon(
