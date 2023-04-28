@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'task_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -10,19 +9,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    navigateToHome();
-  }
-
-  navigateToHome() async {
-    await Future.delayed(const Duration(seconds: 2)).then((value) =>
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => const TaskScreen())));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,5 +25,17 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    navigateToHome();
+  }
+
+  navigateToHome() async {
+    await Future.delayed(const Duration(seconds: 2)).then((value) =>
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => const TaskScreen())));
   }
 }

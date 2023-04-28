@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 
-class TextBoxButton extends StatelessWidget {
+class TextBoxButton extends StatefulWidget {
   const TextBoxButton(
-      {Key? key, required this.placeholder, required this.navigation})
-      : super(key: key);
-  final String placeholder;
-  final GestureTapCallback navigation;
+      {Key? key,
+      required String placeholder,
+      required void Function() navigation})
+      : _navigation = navigation,
+        _placeholder = placeholder,
+        super(key: key);
+  final String _placeholder;
+  final GestureTapCallback _navigation;
 
+  @override
+  State<TextBoxButton> createState() => _TextBoxButtonState();
+}
+
+class _TextBoxButtonState extends State<TextBoxButton> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -21,19 +30,20 @@ class TextBoxButton extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Padding(
-                  padding: const EdgeInsets.only(left: 100),
-                  child: GestureDetector(
-                    onTap: () {
-                      navigation();
-                    },
-                    child: Text(
-                      placeholder,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 18),
-                    ),
-                  )),
+                padding: const EdgeInsets.only(left: 100),
+                child: GestureDetector(
+                  onTap: () {
+                    widget._navigation();
+                  },
+                  child: Text(
+                    widget._placeholder,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18),
+                  ),
+                ),
+              ),
             ),
           ),
         ),

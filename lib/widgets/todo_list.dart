@@ -1,29 +1,33 @@
 import 'package:flutter/material.dart';
-import '../model/db_,model.dart';
+import '../model/db_model.dart';
 import 'list_widget.dart';
 
 class TodoList extends StatelessWidget {
-  final Function insertFunction;
-  final Function deleteFunction;
-  final Function updateFunction;
+  final Function _insertFunction;
+  final Function _deleteFunction;
+  final Function _updateFunction;
 
-  final db = DatabaseConnect();
+  final _db = DatabaseConnect();
 
-  TodoList(
-      {required this.insertFunction,
-      required this.deleteFunction,
-      Key? key, required this.updateFunction,})
-      : super(key: key);
+  TodoList({
+    required Function insertFunction,
+    required Function deleteFunction,
+    Key? key,
+    required Function updateFunction,
+  })  : _updateFunction = updateFunction,
+        _deleteFunction = deleteFunction,
+        _insertFunction = insertFunction,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: FutureBuilder(
-        future: db.getTodo(),
+        future: _db.getTodo(),
         initialData: const [],
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-          var data = snapshot.data;
-          var dataLength = data!.length;
+          dynamic data = snapshot.data;
+          dynamic dataLength = data!.length;
 
           return dataLength == 0
               ? const Center(
@@ -42,9 +46,9 @@ class TodoList extends StatelessWidget {
                     title: data[i].title,
                     creationDate: data[i].creationDate,
                     isChecked: data[i].isChecked,
-                    insertFunction: insertFunction,
-                    deleteFunction: deleteFunction, updateFunction: updateFunction,
-
+                    insertFunction: _insertFunction,
+                    deleteFunction: _deleteFunction,
+                    updateFunction: _updateFunction,
                   ),
                 );
         },

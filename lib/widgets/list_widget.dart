@@ -34,79 +34,90 @@ class _ListWidgetState extends State<ListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var anotherTodo = Todo(
+    dynamic anotherTodo = Todo(
         title: widget.title,
         creationDate: widget.creationDate,
         isChecked: widget.isChecked,
         id: widget.id);
     return Padding(
-        padding: const EdgeInsets.only(right: 20),
-        child: Container(
-            padding: const EdgeInsets.only(right: 12, top: 12, bottom: 12),
-            margin: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), color: Colors.white),
-            child: Row(children: [
-              Checkbox(
-                  shape: const RoundedRectangleBorder(),
-                  checkColor: Colors.white,
-                  activeColor: const Color(0xFF283593),
-                  value: widget.isChecked,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      widget.isChecked = value!;
-                    });
-                    anotherTodo.isChecked = value!;
-                    widget.insertFunction(anotherTodo);
-                  }),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.title,
-                      style: const TextStyle(
-                          color: Color(0xFF040404),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400),
+      padding: const EdgeInsets.only(right: 20),
+      child: Container(
+        padding: const EdgeInsets.only(right: 12, top: 12, bottom: 12),
+        margin: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10), color: Colors.white),
+        child: Row(
+          children: [
+            Checkbox(
+              shape: const RoundedRectangleBorder(),
+              checkColor: Colors.white,
+              activeColor: const Color(0xFF283593),
+              value: widget.isChecked,
+              onChanged: (bool? value) {
+                setState(
+                  () {
+                    widget.isChecked = value!;
+                  },
+                );
+                anotherTodo.isChecked = value!;
+                widget.insertFunction(anotherTodo);
+              },
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                        color: Color(0xFF040404),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  const Divider(
+                    color: Colors.black,
+                  ),
+                  Text(
+                    DateFormat('dd MMM yyyy - hh:mm aaa')
+                        .format(widget.creationDate),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF8F8F8F),
                     ),
-                    Divider(
-                      color: Colors.black,
-                    ),
-                    Text(
-                      DateFormat('dd MMM yyyy - hh:mm aaa').format(widget.creationDate),
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF8F8F8F),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              GestureDetector(
-                child: const Icon(
-                  Icons.edit,
-                  color: Colors.grey,
-                ),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => EditTask(
-                            updateFunction: widget.updateFunction,
-                            value: id,
-                          )));
-                },
+            ),
+            GestureDetector(
+              child: const Icon(
+                Icons.edit,
+                color: Colors.grey,
               ),
-              const SizedBox(width: 4),
-              GestureDetector(
-                onTap: () {
-                  widget.deleteFunction(anotherTodo);
-                },
-                child: const Icon(
-                  Icons.delete,
-                  color: Colors.red,
-                ),
-              )
-            ])));
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => EditTask(
+                      updateFunction: widget.updateFunction,
+                      value: id,
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(width: 4),
+            GestureDetector(
+              onTap: () {
+                widget.deleteFunction(anotherTodo);
+              },
+              child: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

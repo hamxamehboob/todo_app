@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+
 import 'package:path/path.dart';
 import './todo_model.dart';
 
@@ -59,7 +60,9 @@ class DatabaseConnect {
       (i) => Todo(
         id: items[i]['id'],
         title: items[i]['title'],
-        creationDate: DateTime.parse(items[i]['creationDate']),
+        creationDate: DateTime.parse(
+          items[i]['creationDate'],
+        ),
         isChecked: items[i]['isChecked'] == 1 ? true : false,
       ),
     );

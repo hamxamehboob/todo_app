@@ -10,6 +10,7 @@ class Todo {
     required this.creationDate,
     required this.isChecked,
   });
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
